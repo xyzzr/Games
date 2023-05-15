@@ -1,2 +1,1 @@
-getgenv().autoExecuteFolder = true -- set to true if you want to put this in your auto exe folder, false for the normal way
-loadstring(game:HttpGet("https://gist.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/2b1a65f8da3ede5478439e282c681473/raw/063b14f3d438e6db65ad8414a265d6b952bd72d4/gistfile1.txt"))();
+-- Broken
