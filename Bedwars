@@ -1,0 +1,8 @@
+-- Vape 4 Private Client
+local keyblind = [[V]]
+getgenv().getcustomasset = nil 
+getgenv().getsynasset = nil 
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))() 
+wait(0.1) 
+shared.GuiLibrary.GUIKeybind = keyblind
