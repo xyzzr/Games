@@ -1,8 +1,0 @@
-getgenv().autofarm_settings = {
-
-  toggle = true,
-  delay = 0,
-
-}
-
-loadstring(game:HttpGet("https://gist.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/b047c5af45dce3bcea592f9b28dbe921/raw/19b7bde2c8af5b6fc27da36646d8b1b75cc54a89/autofarm_for_shrekinthebackrooms.lua"))()
