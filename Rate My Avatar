@@ -2,7 +2,7 @@
 
 -- JOIN THE DISCORD! - https://discord.gg/3GJECGdCWY 
 
-local Library = loadstring(game:HttpGet("https://gist.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/14c829dff9926bdff7ba540f7e3ed145/raw/7311bb4b0e7546a36f678594d6d9edfef6a694e4/source.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/libarys/main/kavo"))()
 local Window = Library.CreateLib("Rate my Avatar GUI", "Ocean")
 
 local Tab = Window:NewTab("Booth")
