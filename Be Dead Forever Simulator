@@ -1,0 +1,43 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+wait(0.5)
+
+local CFrameEnd = CFrame.new(30.134883880615234, 109.99996948242188, 501.32830810546875)
+local Time = 3
+local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})  tween:Play()  tween.Completed:Wait()
+wait(0.5)
+
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+wait(0.5)
+
+function a()
+   for _,v in pairs(workspace:GetChildren()) do
+       if v.Name == "Trashcan" and v:IsA("UnionOperation") then
+           if #v:GetChildren() ~= 2 then
+           v:Destroy()
+           end
+       end
+   end
+end
+a()
+
+function autoequip()
+   for _,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+       if v.name == "Garbage Bag" then
+           v.Parent = game.Players.LocalPlayer.Character
+       end
+   end
+end
+
+for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+       if v.Name == "Trashcan" and v:IsA("UnionOperation") then
+           while wait(0.01) do
+           game:GetService("Workspace")["DumpsterMoneyMaker"].MoneyHitbox.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+           fireclickdetector(v.ClickDetector)
+           autoequip()
+       end
+   end
+end
