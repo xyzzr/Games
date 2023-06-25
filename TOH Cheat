@@ -59,6 +59,7 @@ MT.__namecall = newcclosure(function(self, ...)
 end
 
 
+
 if _G.godmode then
 game.StarterGui:SetCore("SendNotification", {
 Title = "TOH Cheat";
@@ -75,6 +76,7 @@ for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
         end 
     end 
 end
+
 
 
 if _G.clicktp then
@@ -98,6 +100,7 @@ if mouse.Target then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame 
 end
 
 
+
 if _G.autofarm then
 game.StarterGui:SetCore("SendNotification", {
 Title = "TOH Cheat";
@@ -108,9 +111,12 @@ Duration = 5;
 end
 
 while _G.autofarm == true do
-     wait()
-      wait(5.98)
+    wait()
+      wait(6.98)
   game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.finishes.Finish.CFrame
-wait(3.5)
-game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService"Players".LocalPlayer)
+   wait(3.5)
+   game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.finishes.Finish.CFrame
+   wait(1.5)
+   local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/Script-Stuff/main/Serverhop")()
+   module:Teleport(game.PlaceId)
 end
