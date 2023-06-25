@@ -1,0 +1,116 @@
+
+_G.tpbypass = true
+_G.godmode = false
+_G.autofarm = true
+_G.clicktp = false -- only have setted to true if bypass is on
+
+_G.clicktpkeyblind = "z"
+
+
+print("-----------------------------------")
+if _G.godmode == false then
+print("TOH Cheat: Godmode - False")
+end
+if _G.godmode == true then
+print("TOH Cheat: Godmode - True")
+end
+
+if _G.tpbypass == false then
+print("TOH Cheat: tp bypass - False")
+end
+if _G.tpbypass == true then
+print("TOH Cheat: tp bypass - True")
+end
+
+if _G.clicktp == false then
+print("TOH Cheat: click tp - False")
+end
+if _G.clicktp == true then
+print("TOH Cheat: click tp - True")
+end
+
+if _G.autofarm == false then
+print("TOH Cheat: autofarm - False")
+end
+if _G.autofarm == true then
+print("TOH Cheat: autofarm - True")
+end
+print("-----------------------------------")
+
+
+if _G.tpbypass then
+game.StarterGui:SetCore("SendNotification", {
+Title = "TOH Cheat";
+Text = "tp bypass activated.";
+Icon = "rbxassetid://57254792";
+Duration = 5;
+})
+
+local MT = getrawmetatable(game)
+local Name = MT.__namecall
+setreadonly(MT, false)
+MT.__namecall = newcclosure(function(self, ...)
+    local Method = getnamecallmethod() or get_namecall_method()
+    if string.lower(Method) == "kick" then
+        return
+     end
+    return Name(self, ...)
+  end)
+end
+
+
+if _G.godmode then
+game.StarterGui:SetCore("SendNotification", {
+Title = "TOH Cheat";
+Text = "Godmode activated.";
+Icon = "rbxassetid://57254792";
+Duration = 5;
+})
+end
+while _G.godmode == true do
+      wait()
+for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+    if v.Name == "hitbox" then 
+        v:Destroy()
+        end 
+    end 
+end
+
+
+if _G.clicktp then
+game.StarterGui:SetCore("SendNotification", {
+Title = "TOH Cheat";
+Text = "Click tp Activated";
+Icon = "rbxassetid://57254792";
+Duration = 5;
+})
+end
+
+while _G.clicktp == true do
+      wait()
+mouse = game.Players.LocalPlayer:GetMouse()
+mouse.KeyDown:connect(function(key)
+if key == _G.clicktpkeyblind then
+if mouse.Target then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z)
+            end
+        end 
+    end)
+end
+
+
+if _G.autofarm then
+game.StarterGui:SetCore("SendNotification", {
+Title = "TOH Cheat";
+Text = "Autofarm Activated";
+Icon = "rbxassetid://57254792";
+Duration = 5;
+})
+end
+
+while _G.autofarm == true do
+     wait()
+      wait(5.98)
+  game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.finishes.Finish.CFrame
+wait(3.5)
+game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService"Players".LocalPlayer)
+end
