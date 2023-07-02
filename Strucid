@@ -28,13 +28,13 @@ end)
 
 local Config = {
 Visuals = {
-BoxEsp = true,
-CornerBoxEsp = true,
-TracerEsp = true,
+BoxEsp = false,
+CornerBoxEsp = false,
+TracerEsp = false,
 TracersOrigin = "Bottom", -- "Top", "Middle", "Bottom", or "Mouse"
 NameEsp = false,
 DistanceEsp = false,
-SkeletonEsp = true,
+SkeletonEsp = false,
 EnemyColor = Color3.fromRGB(190, 190, 0),
 TeamColor = Color3.fromRGB(0, 190, 0),
 TeamCheck = true, -- Auto changes if gamemode is ffa
@@ -48,16 +48,16 @@ Smoothness = 0.25,
 AimBone = "Torso",
 RandomAimBone = true,
 MouseTwoDown = false, -- Dont Touch
-Silent = true,
+Silent = false,
 VisCheck = false,
-DrawFOV = true,
+DrawFOV = false,
 FOV = 200,
 SnapLines = false,
-RainbowGun = true
+RainbowGun = false
 },
 GunMods = {
-Recoil = true,
-Spread = true,
+Recoil = false,
+Spread = false,
 FireRate = false,
 Wallbang = false
 },
