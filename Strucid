@@ -11,7 +11,7 @@ Hook2 = hookfunction(Network2.FireServer, newcclosure(function(...)
  if tostring(args[1]) == "LookDir" and table.find(Banned, args[2]) ~= nil then--Movement
             return
     end
-    if tostring(args[2]) == "-nan(ind)" then--Should break anti-cheat as a backup if they detect
+    if tostring(args[2]) == "-nan(ind)" then -- Should break anti-cheat as a backup if they detect
         return 
     end
 
@@ -20,13 +20,18 @@ Hook2 = hookfunction(Network2.FireServer, newcclosure(function(...)
 end))
 print("Bypassed Anti Cheat")
 
+getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child) -- auto rejoins when u get kicked
+if child.Name == "ErrorPrompt" and child:FindFirstChild("MessageArea") and child.MessageArea:FindFirstChild("ErrorFrame") then
+    game:GetService("TeleportService"):Teleport(game.PlaceId)
+   end
+end)
 
 local Config = {
 Visuals = {
 BoxEsp = false,
 CornerBoxEsp = false,
 TracerEsp = false,
-TracersOrigin = "Top", -- "Top", "Middle", "Bottom", or "Mouse"
+TracersOrigin = "Buttom", -- "Top", "Middle", "Bottom", or "Mouse"
 NameEsp = false,
 DistanceEsp = false,
 SkeletonEsp = false,
@@ -132,7 +137,7 @@ local newClose = newcclosure or function(f) return f end
 if setreadonly then setreadonly(mt, false) else make_writeable(mt, true) end
 
 
-local lib = loadstring(game:HttpGet("https://pastebin.com/raw/2U92qyG3"))()
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/libarys/main/Dark%20LIB"))()
 main = lib:Window()
 Aimbot = main:Tab('Combat')
 LPTab = main:Tab('LocalPlayer')
