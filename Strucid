@@ -28,13 +28,13 @@ end)
 
 local Config = {
 Visuals = {
-BoxEsp = false,
-CornerBoxEsp = false,
-TracerEsp = false,
+BoxEsp = true,
+CornerBoxEsp = true,
+TracerEsp = true,
 TracersOrigin = "Bottom", -- "Top", "Middle", "Bottom", or "Mouse"
 NameEsp = false,
 DistanceEsp = false,
-SkeletonEsp = false,
+SkeletonEsp = true,
 EnemyColor = Color3.fromRGB(190, 190, 0),
 TeamColor = Color3.fromRGB(0, 190, 0),
 TeamCheck = true, -- Auto changes if gamemode is ffa
@@ -48,16 +48,16 @@ Smoothness = 0.25,
 AimBone = "Head",
 RandomAimBone = true,
 MouseTwoDown = false, -- Dont Touch
-Silent = false,
+Silent = true,
 VisCheck = false,
-DrawFOV = false,
+DrawFOV = true,
 FOV = 200,
 SnapLines = false,
-RainbowGun = false
+RainbowGun = true
 },
 GunMods = {
-Recoil = false,
-Spread = false,
+Recoil = true,
+Spread = true,
 FireRate = false,
 Wallbang = false
 },
@@ -71,6 +71,7 @@ FlySpeed = 100,
 Rejoin = true
   }
 }
+
 
 local Services = setmetatable({
 LocalPlayer = game:GetService("Players").LocalPlayer,
