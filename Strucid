@@ -1,30 +1,23 @@
 local NotificationBindable = Instance.new("BindableFunction")
 NotificationBindable.OnInvoke = callback
 
-
-wait(2)
+wait(1.5)
 local Network2 = game:GetService("ReplicatedStorage").Network.LookDir
 local Hook2 
 Hook2 = hookfunction(Network2.FireServer, newcclosure(function(...)
     local args = {...}
     local Banned = {5, 21, 23, 22, 1}
- if tostring(args[1]) == "LookDir" and table.find(Banned, args[2]) ~= nil then--Movement
+ if tostring(args[1]) == "LookDir" and table.find(Banned, args[2]) ~= nil then -- Movement
             return
     end
-    if tostring(args[2]) == "-nan(ind)" then -- Should break anti-cheat as a backup if they detect
+    if tostring(args[2]) == "-nan(ind)" then
         return 
     end
-
-
     return Hook2(...)
 end))
-print("Bypassed Anti Cheat")
+print("< Bypassed Anti Cheat | Even if you get kicked you wont get banned >")
 
-getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child) -- auto rejoins when u get kicked
-if child.Name == "ErrorPrompt" and child:FindFirstChild("MessageArea") and child.MessageArea:FindFirstChild("ErrorFrame") then
-    game:GetService("TeleportService"):Teleport(game.PlaceId)
-   end
-end)
+
 
 local Config = {
 Visuals = {
@@ -35,7 +28,7 @@ TracersOrigin = "Bottom", -- "Top", "Middle", "Bottom", or "Mouse"
 NameEsp = false,
 DistanceEsp = false,
 SkeletonEsp = false,
-EnemyColor = Color3.fromRGB(190, 190, 0),
+EnemyColor = Color3.fromRGB(255, 0, 0),
 TeamColor = Color3.fromRGB(0, 190, 0),
 TeamCheck = true, -- Auto changes if gamemode is ffa
 ItemEsp = false,
@@ -68,7 +61,7 @@ WS = 17,
 JP = 50,
 Fly = false,
 FlySpeed = 100,
-Rejoin = true
+Rejoin = false
   }
 }
 
@@ -140,12 +133,13 @@ if setreadonly then setreadonly(mt, false) else make_writeable(mt, true) end
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/libarys/main/Dark%20LIB"))()
 main = lib:Window()
-Aimbot = main:Tab('Combat')
-LPTab = main:Tab('LocalPlayer')
-Esp = main:Tab('Visuals')
-GunMods = main:Tab('Gun Mods')
-Fun = main:Tab('Fun')
 
+Aimbot = main:Tab("Combat")
+LPTab = main:Tab("LocalPlayer")
+Esp = main:Tab("Visuals")
+Fun = main:Tab("Misc")
+
+-- Localplayer tab
 
 LPTab:Toggle('No Fall Damage',function(state)
   Config.LocalPlayer.NoFD = state  
@@ -161,23 +155,171 @@ end)
 
 
 LPTab:Slider('WalkSpeed/FlySpeed', 17, 100, function(num)
-Config.LocalPlayer.WS = num
+   Config.LocalPlayer.WS = num
 end)
 
 LPTab:Slider('JumpPower', 50, 100, function(num)
-Config.LocalPlayer.JP = num
+   Config.LocalPlayer.JP = num
+end)
+
+Aimbot:Label("SilentAim Settings") --      Combat Tab / Aimbot
+Aimbot:Toggle('SilentAim',function(state)
+Config.Aimbot.Silent = state
+end)
+
+Aimbot:Dropdown(
+"Aimpart",{'Random','Head (Bannable)','Torso','Left Arm','Right Arm','Left Leg','Right Leg'}, 
+function(selected)
+if selected == "Random" then
+  Config.Aimbot.RandomAimBone = true
+elseif selected == "Head (Bannable!)" then
+  Config.Aimbot.AimBone = "Head"
+  Config.Aimbot.RandomAimBone = false
+elseif selected == "Torso" then
+  Config.Aimbot.AimBone = "UpperTorso"
+  Config.Aimbot.RandomAimBone = false
+elseif selected == "Left Arm" then
+  Config.Aimbot.AimBone = "LeftLowerArm"
+  Config.Aimbot.RandomAimBone = false
+elseif selected == "Right Arm" then
+  Config.Aimbot.AimBone = "RightLowerArm"
+  Config.Aimbot.RandomAimBone = false
+elseif selected == "Left Leg" then
+  Config.Aimbot.AimBone = "LeftLowerLeg"
+  Config.Aimbot.RandomAimBone = false
+elseif selected == "Right Leg" then
+  Config.Aimbot.AimBone = "RightLowerLeg"
+  Config.Aimbot.RandomAimBone = false
+    end
+end
+)
+
+Aimbot:Label("Fov Settings")
+Aimbot:Toggle('Draw FOV',function(state)
+Config.Aimbot.DrawFOV = state
+end)
+
+Aimbot:Slider('FOV',0,1000,function(number)
+Config.Aimbot.FOV = number
+end)
+
+Aimbot:Label("Gun Mods")
+Aimbot:Toggle('No Recoil',function(state)
+Config.GunMods.Recoil = state
+Funcs:UpdateGuns()
+end)
+
+Aimbot:Toggle('No Spread',function(state)
+Config.GunMods.Spread = state
+Funcs:UpdateGuns()
+end)
+
+Aimbot:Toggle("Wallbang (Wont work on enemies that are too far)",function(state)
+Config.GunMods.Wallbang = state
+end)
+
+--      Esp Tab
+
+Esp:Toggle('Boxes',function(state)
+Config.Visuals.BoxEsp = state
+end)
+
+Esp:Toggle('Corner Boxes',function(state)
+Config.Visuals.CornerBoxEsp = state
+end)
+
+Esp:Toggle('Skeleton',function(state)
+Config.Visuals.SkeletonEsp = state
+end)
+
+Esp:Toggle('Tracers',function(state)
+Config.Visuals.TracerEsp = state
+end)
+
+Esp:Dropdown(
+"Tracers Origin",{"Top","Middle","Bottom","Mouse"}, 
+function(selected)
+Config.Visuals.TracersOrigin = selected
+end
+)
+
+Esp:Colorpicker("Team Esp Color",Color3.fromRGB(40, 127, 71), function(color)
+Config.Visuals.TeamColor = color
+end)
+
+Esp:Colorpicker("Enemy Esp Color",Color3.fromRGB(255, 0, 0), function(color)
+Config.Visuals.EnemyColor = color
+end)
+
+Esp:Colorpicker("Crosshair Color",Color3.fromRGB(225,225,225), function(color)
+Config.Visuals.CrossairColor = color
+end)
+
+--      Fun Tab
+
+Fun:Toggle("Rainbow Guns",function(state)
+Config.Visuals.RainbowGun = state
+end)
+
+Fun:Toggle("Auto-Rejoin",function(state)
+game.StarterGui:SetCore("SendNotification", {
+ Title = "Auto-Rejoin";
+ Text = "Rejoins if you get kicked also an anti votekick";
+ Icon = "rbxassetid://57254792";
+ Duration = 5;
+})
+Config.LocalPlayer.Rejoin = state
 end)
 
 
-   game:GetService("RunService").RenderStepped:Connect(function()
+Fun:Button("Exit Gui",function()
+ game.CoreGui.MarkBeatsIsGay:Destroy()
+  Config.LocalPlayer.NoFD = false
+   Config.LocalPlayer.Nofatigue = false
+   Config.LocalPlayer.Fly = false
+   Config.LocalPlayer.WS = 17
+   Config.LocalPlayer.JP = 50
+   Config.Aimbot.Silent = false
+   Config.Aimbot.DrawFOV = false
+   Config.GunMods.Recoil = false
+   Config.GunMods.Spread = false
+   Config.GunMods.Wallbang = false
+   Config.Visuals.BoxEsp = false
+   Config.Visuals.CornerBoxEsp = false
+   Config.Visuals.SkeletonEsp = false
+   Config.Visuals.TracerEsp = false
+   Config.Visuals.RainbowGun = false
+  Config.LocalPlayer.Rejoin = false
+ Funcs:UpdateGuns()
+ game.Players.LocalPlayer.Character.Humanoid.Health = 0
+ wait(0.1)
+game.StarterGui:SetCore("SendNotification", {
+ Title = "Exitting Script";
+ Text = "Resetted your character to toggle everything off.";
+ Icon = "rbxassetid://57254792";
+ Duration = 5;
+})
+end)
 
+Fun:Button("Serverhop",function()
+   local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/Script-Stuff/main/Serverhop")()
+   module:Teleport(game.PlaceId)
+end)
+Fun:Button("Rejoin",function()
+    game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService"Players".LocalPlayer)
+end)
 
+Fun:Label("Credits")
+Fun:Label("Recoded by Pvhak on discord")
+
+-- End Of GUI
+
+game:GetService("RunService").RenderStepped:Connect(function()
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Config.LocalPlayer.WS
-
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = Config.LocalPlayer.JP
 end)
 
-game:GetService('UserInputService').InputBegan:connect(function(key, gpe)
+game:GetService("UserInputService").InputBegan:connect(function(key, gpe)
     if key.KeyCode == Enum.KeyCode.Space then
         Temp_Up = true
     end
@@ -218,21 +360,6 @@ spawn(function()
     end
 end)
 
-if game.PlaceId == 2377868063 then
-
-LPTab:Label('Capture The Flag Gamemode: ')
-LPTab:Button('Capture Blue Flag',function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game:GetService("Workspace").IgnoreThese.BlueFlag.Position)
-wait(.2)
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game:GetService("Workspace").IgnoreThese.RedFlag.Position)
-end)
-LPTab:Button('Capture Red Flag',function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game:GetService("Workspace").IgnoreThese.RedFlag.Position)
-wait(.2)
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game:GetService("Workspace").IgnoreThese.BlueFlag.Position)
-end)
-end
-
 game:GetService("RunService").Heartbeat:Connect(function()
 if Config.LocalPlayer.Nofatigue == true then
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = 38
@@ -240,100 +367,17 @@ end
 end)
 
 
-
-Aimbot:Toggle('Silent Aim',function(state)
-Config.Aimbot.Silent = state
-end)
-
-
-
-Aimbot:Dropdown(
-"Aim Bone",{'Random','Head (Bannable)','Torso','Left Arm','Right Arm','Left Leg','Right Leg'}, 
-function(selected)
-if selected == "Random" then
-  Config.Aimbot.RandomAimBone = true
-elseif selected == "Head (Bannable!)" then
-  Config.Aimbot.AimBone = "Head"
-  Config.Aimbot.RandomAimBone = false
-elseif selected == "Torso" then
-  Config.Aimbot.AimBone = "UpperTorso"
-  Config.Aimbot.RandomAimBone = false
-elseif selected == "Left Arm" then
-  Config.Aimbot.AimBone = "LeftLowerArm"
-  Config.Aimbot.RandomAimBone = false
-elseif selected == "Right Arm" then
-  Config.Aimbot.AimBone = "RightLowerArm"
-  Config.Aimbot.RandomAimBone = false
-elseif selected == "Left Leg" then
-  Config.Aimbot.AimBone = "LeftLowerLeg"
-  Config.Aimbot.RandomAimBone = false
-elseif selected == "Right Leg" then
-  Config.Aimbot.AimBone = "RightLowerLeg"
-  Config.Aimbot.RandomAimBone = false
-end
-end
-)
-
-Aimbot:Toggle('Draw FOV',function(state)
-Config.Aimbot.DrawFOV = state
-end)
-
-Aimbot:Slider('FOV',0,1000,function(number)
-Config.Aimbot.FOV = number
-end)
-
-Esp:Toggle('Boxes',function(state)
-Config.Visuals.BoxEsp = state
-end)
-
-Esp:Toggle('Corner Boxes',function(state)
-Config.Visuals.CornerBoxEsp = state
-end)
-
-Esp:Toggle('Skeleton',function(state)
-Config.Visuals.SkeletonEsp = state
-end)
-
-Esp:Toggle('Tracers',function(state)
-Config.Visuals.TracerEsp = state
-end)
-
-Fun:Toggle('Rainbow Guns',function(state)
-Config.Visuals.RainbowGun = state
-end)
-
-
-Esp:Dropdown(
-"Tracers Origin",{'Top','Middle','Bottom','Mouse'}, 
-function(selected)
-Config.Visuals.TracersOrigin = selected
-end
-)
-
-Esp:Colorpicker("Team Esp Color",Color3.fromRGB(40, 127, 71), function(color)
-Config.Visuals.TeamColor = color
-end)
-
-Esp:Colorpicker("Enemy Esp Color",Color3.fromRGB(205, 84, 75), function(color)
-Config.Visuals.EnemyColor = color
-end)
-
-Esp:Colorpicker("Crossair",Color3.fromRGB(225,225,225), function(color)
-Config.Visuals.CrossairColor = color
-end)
-
-   game:GetService("RunService").RenderStepped:Connect(function()
+game:GetService("RunService").RenderStepped:Connect(function()
 pcall(function()
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CrossHairs:GetChildren()) do
     if v.ClassName == "Frame" then
         v.BackgroundColor3 = Config.Visuals.CrossairColor
-        end
+    end
 end
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.ShotgunCrossHairs:GetChildren()) do
     if v.ClassName == "Frame" or v.ClassName == "ImageLabel" then
         v.BackgroundColor3 = Config.Visuals.CrossairColor
         v.ImageColor3 = Config.Visuals.CrossairColor
-
         end
 end
 
@@ -345,7 +389,6 @@ if v.ClassName == "Model" then
         if v2.ClassName == "Part" then
 local BillboardGui = Instance.new("BillboardGui")
 local TextLabel = Instance.new("TextLabel")
-
 BillboardGui.Parent = v2.Parent
 BillboardGui.AlwaysOnTop = true
 BillboardGui.LightInfluence = 1
@@ -358,15 +401,15 @@ TextLabel.Size = UDim2.new(5, 0, 1, 0)
 TextLabel.Text = v2.Parent.Name
 TextLabel.TextColor3 = Color3.fromRGB(17, 17, 17)
 TextLabel.TextScaled = true
-end
+    end
 end
 else
     v2.Parent("BillboardGui"):Destroy()
-end
-end
-end)
-end
-end)
+                     end
+                 end
+             end)
+         end
+     end)
 end)
 
     function Property(instance, property)
@@ -392,30 +435,6 @@ end
 function Property(instance, property)
     local prop = instance[property]
 end
-
-
-
-
-
-GunMods:Toggle('No Recoil',function(state)
-Config.GunMods.Recoil = state
-Funcs:UpdateGuns()
-end)
-
-GunMods:Toggle('No Spread',function(state)
-Config.GunMods.Spread = state
-Funcs:UpdateGuns()
-end)
-
---GunMods:Toggle('FireRate',function(state)
---Config.GunMods.FireRate = state
---Funcs:UpdateGuns()
---end)
-
-GunMods:Toggle('Wallbang (Cant be to far for ememy or no work)',function(state)
-Config.GunMods.Wallbang = state
-end)
-
 
 -- Aimbot
 function Funcs:GetTarget()
@@ -458,10 +477,10 @@ else
       if magnitude < nearestmagnitude and magnitude <= Config.Aimbot["FOV"] then
         nearestenemy = v
         nearestmagnitude = magnitude
-      end
+                end
+            end
+        end
     end
-  end
-end
 end
 return nearestenemy
 end
@@ -474,10 +493,9 @@ pcall(function()
     local niggasbone = game:GetService("Workspace").CurrentCamera:WorldToScreenPoint(TargetPlayer.Character[Config.Aimbot.AimBone].Position)
     local moveto = Vector2.new((niggasbone.X-Mouse.X)*Config.Aimbot.Smoothness,(niggasbone.Y-Mouse.Y)*Config.Aimbot.Smoothness)
     mousemoverel(moveto.X,moveto.Y)
-
-  end
-end)
-end
+             end
+         end)
+     end
 end)
 
     local player = game:GetService("Players").LocalPlayer
@@ -487,8 +505,8 @@ if Config.Aimbot.TriggerBot == true then
     if Mouse.Target.Parent:FindFirstChild("Humanoid") and Config.Aimbot.TriggerBot == true and Mouse.Target.Parent.Name ~= player.Name then
         mouse1press() wait() mouse1release()
         end
-end
-   end)
+    end
+end)
 
 
 
@@ -693,20 +711,20 @@ else
   bottomlefttwo.Visible = false
   toprighttwo.Visible = false
   bottomrighttwo.Visible = false
-end
-end)
+        end
+    end)
 end
 
 for i, v in pairs(Services.Players:GetPlayers()) do
 if v ~= Services.LocalPlayer then
 Funcs:AddEsp(v)
-end
+    end
 end
 
 Services.Players.PlayerAdded:Connect(function(player)
 if v ~= Services.LocalPlayer then
 Funcs:AddEsp(player)
-end
+    end
 end)
 
 local HitParticle = require(game:GetService("ReplicatedStorage").Modules.GlobalStuff).HitParticle
@@ -718,7 +736,7 @@ if Config.GunMods.Wallbang then
   return
 else
   return HitParticle(...)
-end
+    end
 end
 
 require(game:GetService("ReplicatedStorage").Modules.GlobalStuff).GetWSettings = function(Argument_1, Argument_2)
@@ -736,23 +754,13 @@ if b.Name ~= "Pickaxe" then
   else
     require(b).Recoil = require(game:GetService("ReplicatedStorage").Weapons.Modules[b.Name]).Recoil
   end
---  if Config.GunMods.FireRate == true then
-  --  require(b).Debounce = 0
---  else
-  --  require(b).Debounce = require(game:GetService("ReplicatedStorage").Weapons.Modules[b.Name]).Debounce
---  end
   if Config.GunMods.Spread == true then
     require(b).Inaccuracy = 0
   else
     require(b).Inaccuracy = require(game:GetService("ReplicatedStorage").Weapons.Modules[b.Name]).Inaccuracy
-  end
-    --if Config.GunMods.FireRate == true then
-  --  require(b).Auto = true
- -- else
-   -- require(b).Auto = require(game:GetService("ReplicatedStorage").Weapons.Modules[b.Name]).Auto
-   -- end
-end
-end
+            end
+        end
+    end
 end
 
  game:GetService("RunService").RenderStepped:Connect(function()
@@ -767,8 +775,8 @@ if Config.Aimbot.Silent then
       return Funcs:GetTarget().Character[Config.Aimbot.AimBone].Position
     end
     return ({...})[3]
-  end
-end
+        end
+    end
 end)
 
 
@@ -789,22 +797,27 @@ if ({...})[2] == 1 and ({...})[3] == 21 then
   return true
 else
   return __namecall(...)
-end
+    end
 end
 
 
 Services.RunService.Stepped:Connect(function()
     if Config.LocalPlayer.Rejoin then
+    getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child) -- auto rejoins when u get kicked
+if child.Name == "ErrorPrompt" and child:FindFirstChild("MessageArea") and child.MessageArea:FindFirstChild("ErrorFrame") then
+    game:GetService("TeleportService"):Teleport(game.PlaceId)
+   end
+end)
     if game:GetService("Players").LocalPlayer.PlayerGui.MenuUI.VoteKick and game:GetService("Players").LocalPlayer.PlayerGui.MenuUI.VoteKick.Title.Text == "Vote Kick <font color = '#FFA500'>".. game.Players.LocalPlayer.Name .. "</font>?" then
 game:GetService("TeleportService"):Teleport(game.PlaceId)
     else
 wait()
-end
+    end
 end
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
 if v:FindFirstChild("ImageLabel") then
   game.Players.LocalPlayer:Kick("Anti Votekick worked (You are not banned!)")
-end
+    end
 end
 FOVCircle.Position = game:GetService('UserInputService'):GetMouseLocation();
 FOVCircle.Radius = Config.Aimbot.FOV
@@ -818,8 +831,9 @@ if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.CoreFrames.RoundStats
 Config.Visuals.TeamCheck = false
 else
 Config.Visuals.TeamCheck = true
+    end
 end
-end
+
 if game.PlaceId == 3606833500 then
 Config.Visuals.TeamCheck = false
 end
@@ -831,16 +845,12 @@ elseif random == 2 then
   Config.Aimbot.AimBone = "UpperTorso"
 elseif random == 3 then
   Config.Aimbot.AimBone = "LowerTorso"
-end
+    end
 end
 pcall(function()
 if Config.GunMods.Recoil == true then
-  --getsenv(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.NewLocal).CameraRecoil = function() end
-end
---if Config.GunMods.FireRate == true then
- --getupvalue(getsenv(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.NewLocal).Reload, 3).Debounce = 0
---end
-end)
+        end
+    end)
 end)
 
      local RayHook;
@@ -856,8 +866,6 @@ RayHook = hookfunction(workspace.FindPartOnRayWithIgnoreList,newcclosure(functio
     end
     return RayHook(...)
 end))
-
-
 
 
     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
