@@ -44,7 +44,7 @@ MouseTwoDown = false, -- Dont Touch
 Silent = false,
 VisCheck = false,
 DrawFOV = false,
-FOV = 200,
+FOV = 65,
 SnapLines = false,
 RainbowGun = false
 },
@@ -132,35 +132,11 @@ if setreadonly then setreadonly(mt, false) else make_writeable(mt, true) end
 
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/libarys/main/Dark%20LIB"))()
-main = lib:Window()
-
+main = lib:Window() -- Named MarkBeatsIsGay For no good reason
 Aimbot = main:Tab("Combat")
 LPTab = main:Tab("LocalPlayer")
 Esp = main:Tab("Visuals")
 Fun = main:Tab("Misc")
-
--- Localplayer tab
-
-LPTab:Toggle('No Fall Damage',function(state)
-  Config.LocalPlayer.NoFD = state  
-end)
-
-LPTab:Toggle('No Fatigue',function(state)
-Config.LocalPlayer.Nofatigue = state
-end)
-
-LPTab:Toggle('Fly',function(state)
-Config.LocalPlayer.Fly = state
-end)
-
-
-LPTab:Slider('WalkSpeed/FlySpeed', 17, 100, function(num)
-   Config.LocalPlayer.WS = num
-end)
-
-LPTab:Slider('JumpPower', 50, 100, function(num)
-   Config.LocalPlayer.JP = num
-end)
 
 Aimbot:Label("SilentAim Settings") --      Combat Tab / Aimbot
 Aimbot:Toggle('SilentAim',function(state)
@@ -218,6 +194,34 @@ Aimbot:Toggle("Wallbang (Wont work on enemies that are too far)",function(state)
 Config.GunMods.Wallbang = state
 end)
 
+Aimbot:Toggle("Rainbow Guns",function(state)
+Config.Visuals.RainbowGun = state
+end)
+
+-- Localplayer tab
+
+LPTab:Label("Movement")
+LPTab:Toggle('No Fall Damage',function(state)
+  Config.LocalPlayer.NoFD = state  
+end)
+
+LPTab:Toggle('No Fatigue',function(state)
+Config.LocalPlayer.Nofatigue = state
+end)
+
+LPTab:Toggle('Fly',function(state)
+Config.LocalPlayer.Fly = state
+end)
+
+LPTab:Label("Movement Speed")
+LPTab:Slider('WalkSpeed/FlySpeed', 17, 100, function(num)
+   Config.LocalPlayer.WS = num
+end)
+
+LPTab:Slider('JumpPower', 50, 100, function(num)
+   Config.LocalPlayer.JP = num
+end)
+
 --      Esp Tab
 
 Esp:Toggle('Boxes',function(state)
@@ -257,10 +261,6 @@ end)
 
 --      Fun Tab
 
-Fun:Toggle("Rainbow Guns",function(state)
-Config.Visuals.RainbowGun = state
-end)
-
 Fun:Toggle("Auto-Rejoin",function(state)
 game.StarterGui:SetCore("SendNotification", {
  Title = "Auto-Rejoin";
@@ -271,9 +271,19 @@ game.StarterGui:SetCore("SendNotification", {
 Config.LocalPlayer.Rejoin = state
 end)
 
-
+Fun:Label("<------------------------------------->")
+Fun:Button("Serverhop",function()
+   local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/Script-Stuff/main/Serverhop")()
+   module:Teleport(game.PlaceId)
+end)
+Fun:Button("Rejoin",function()
+    game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService"Players".LocalPlayer)
+end)
+Fun:Label("<------------------------------------->")
+Fun:Label("Credits")
+Fun:Label("Recoded by Pvhak")
+Fun:Label("<------------------------------------->")
 Fun:Button("Exit Gui",function()
- game.CoreGui.MarkBeatsIsGay:Destroy()
   Config.LocalPlayer.NoFD = false
    Config.LocalPlayer.Nofatigue = false
    Config.LocalPlayer.Fly = false
@@ -291,8 +301,10 @@ Fun:Button("Exit Gui",function()
    Config.Visuals.RainbowGun = false
   Config.LocalPlayer.Rejoin = false
  Funcs:UpdateGuns()
- game.Players.LocalPlayer.Character.Humanoid.Health = 0
  wait(0.1)
+ game.CoreGui.MarkBeatsIsGay:Destroy()
+ wait(0.1)
+ game.Players.LocalPlayer.Character.Humanoid.Health = 0
 game.StarterGui:SetCore("SendNotification", {
  Title = "Exitting Script";
  Text = "Resetted your character to toggle everything off.";
@@ -300,17 +312,7 @@ game.StarterGui:SetCore("SendNotification", {
  Duration = 5;
 })
 end)
-
-Fun:Button("Serverhop",function()
-   local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/Script-Stuff/main/Serverhop")()
-   module:Teleport(game.PlaceId)
-end)
-Fun:Button("Rejoin",function()
-    game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService"Players".LocalPlayer)
-end)
-
-Fun:Label("Credits")
-Fun:Label("Recoded by Pvhak on discord")
+Fun:Label("<------------------------------------->")
 
 -- End Of GUI
 
@@ -867,16 +869,15 @@ RayHook = hookfunction(workspace.FindPartOnRayWithIgnoreList,newcclosure(functio
     return RayHook(...)
 end))
 
-
-    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
-        if v:IsA("LocalScript") then
-            v:Destroy()
-        end
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+    if v:IsA("LocalScript") then
+        v:Destroy()
     end
+end
 
 while wait(1) do
-         if Config.LocalPlayer.NoFD == true then 
+if Config.LocalPlayer.NoFD == true then 
              wait(1)
 game:GetService("ReplicatedStorage").Network.Remotes.Bouncing:FireServer()
-end
+    end
 end
