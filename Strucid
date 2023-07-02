@@ -31,7 +31,7 @@ Visuals = {
 BoxEsp = false,
 CornerBoxEsp = false,
 TracerEsp = false,
-TracersOrigin = "Buttom", -- "Top", "Middle", "Bottom", or "Mouse"
+TracersOrigin = "Bottom", -- "Top", "Middle", "Bottom", or "Mouse"
 NameEsp = false,
 DistanceEsp = false,
 SkeletonEsp = false,
@@ -69,7 +69,7 @@ JP = 50,
 Fly = false,
 FlySpeed = 100,
 Rejoin = true
-}
+  }
 }
 
 local Services = setmetatable({
@@ -86,7 +86,7 @@ local Funcs = {}
 function Funcs:IsAlive(player)
 if player and player.Character and player.Character:FindFirstChild("Head") and workspace:FindFirstChild(player.Character.Name) and player ~= Services.LocalPlayer then
 return true
-end
+   end
 end
 
 function Funcs:Round(number)
@@ -350,7 +350,6 @@ BillboardGui.AlwaysOnTop = true
 BillboardGui.LightInfluence = 1
 BillboardGui.Size = UDim2.new(0, 10, 10, 10)
 BillboardGui.StudsOffset = Vector3.new(0, 2, 0)
-
 TextLabel.Parent = BillboardGui
 TextLabel.BackgroundColor3 = Color3.new(1, 1, 1)
 TextLabel.BackgroundTransparency = 1
@@ -803,7 +802,7 @@ end
 end
 for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
 if v:FindFirstChild("ImageLabel") then
-  game.Players.LocalPlayer:Kick("tell the darkhub people to fix their script (and dont worry you're not banned)")
+  game.Players.LocalPlayer:Kick("Anti Votekick worked (You are not banned!)")
 end
 end
 FOVCircle.Position = game:GetService('UserInputService'):GetMouseLocation();
