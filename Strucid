@@ -16,7 +16,7 @@ Hook2 = hookfunction(Network2.FireServer, newcclosure(function(...)
     return Hook2(...)
 end))
 print("< Bypassed Anti Cheat | Even if you get kicked you wont get banned >")
-
+print("                        < Clearware Loaded >                        ")
 
 
 local Config = {
@@ -316,6 +316,7 @@ Fun:Label("<------------------------------------->")
 
 -- End Of GUI
 
+
 game:GetService("RunService").RenderStepped:Connect(function()
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Config.LocalPlayer.WS
 game.Players.LocalPlayer.Character.Humanoid.JumpPower = Config.LocalPlayer.JP
@@ -500,10 +501,11 @@ pcall(function()
      end
 end)
 
-    local player = game:GetService("Players").LocalPlayer
-   local Mouse = player:GetMouse()
-   game:GetService("RunService").RenderStepped:Connect(function()
-if Config.Aimbot.TriggerBot == true then
+local player = game:GetService("Players").LocalPlayer
+local Mouse = player:GetMouse()
+
+game:GetService("RunService").RenderStepped:Connect(function()
+  if Config.Aimbot.TriggerBot == true then
     if Mouse.Target.Parent:FindFirstChild("Humanoid") and Config.Aimbot.TriggerBot == true and Mouse.Target.Parent.Name ~= player.Name then
         mouse1press() wait() mouse1release()
         end
