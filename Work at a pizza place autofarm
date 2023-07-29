@@ -2,13 +2,8 @@
 
 local streamproof = true
 local lowgfx = true
+local antiafk = true
 
-local vu = game:GetService("VirtualUser")
-game:GetService("Players").LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-end)
 
 local EventHandler
 local timeInfo = os.date("*t")
@@ -16,6 +11,14 @@ local version = "1.0"
 if game.PlaceId == 192800 then
 if streamproof then
 rconsolename("Work at a pizza place auto-farm | Version: " .. version)
+end
+if streamproof then
+rconsoleprint("-------------------------------")
+rconsoleprint("Settings")
+rconsoleprint("Streamproof: " .. steamproof)
+rconsoleprint("lowgfx: " .. lowgfx)
+rconsoleprint("antiafk: " .. antiafk)
+rconsoleprint("-------------------------------")
 end
 for i,v in pairs(getgc()) do
     if typeof(v) == "function" and islclosure(v) and not is_synapse_function(v) and debug.getinfo(v).name == "GetEventHandler" then
@@ -26,6 +29,15 @@ for i,v in pairs(getgc()) do
         end
     EventHandler = v
   end
+end
+
+if antiafk then
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   end)
 end
 
 local Table2 = getupvalue(EventHandler, 1)
