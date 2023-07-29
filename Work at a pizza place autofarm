@@ -1,31 +1,27 @@
--- im going insane LOL!
-
-local streamproof = true
+-- Output
+local streamproof = true -- steamproof = rconsole , print = normal console (F9)
+-- Farming
+local fastmode = true
 local lowgfx = true
 local antiafk = true
 
 
 local EventHandler
 local timeInfo = os.date("*t")
-local version = "1.0"
+local version = "1.2"
+
 if game.PlaceId == 192800 then
+
 if streamproof then
-rconsolename("Work at a pizza place auto-farm | Version: " .. version)
-end
-if streamproof then
-rconsoleprint("-------------------------------")
-rconsoleprint("Settings")
-rconsoleprint("Streamproof: " .. steamproof)
-rconsoleprint("lowgfx: " .. lowgfx)
-rconsoleprint("antiafk: " .. antiafk)
-rconsoleprint("-------------------------------")
+  rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version)
+  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Script loaded.")
 end
 for i,v in pairs(getgc()) do
     if typeof(v) == "function" and islclosure(v) and not is_synapse_function(v) and debug.getinfo(v).name == "GetEventHandler" then
               if streamproof then
-              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: found\n")
+              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found\n")
              else
-            print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: found")
+            print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found")
         end
     EventHandler = v
   end
@@ -38,8 +34,12 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
    end)
+   if streamproof then
+     rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-afk is on\n")
+   else
+     print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-Afk is on")
+    end
 end
-
 local Table2 = getupvalue(EventHandler, 1)
 for i,v in pairs(Table2) do
     if v.Remote then
@@ -178,9 +178,9 @@ function CashierClass:HandleCustomerDialog(Customer, Register)
         Events.OrderComplete:FireServer(Customer, OrderString, Register)
         Customer:SetAttribute("AlreadyHandled", true)
                           if streamproof then
-              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done handling dialog!\n")
+              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done talking to customer.\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done handling dialog!")
+             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done talking to customer.")
             end
     end
 end
@@ -213,9 +213,9 @@ local CashierCoroutine = coroutine.create(function()
             TeleportToJob("Cashier")
         end
                          if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Getting closest customer..\n")
+                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Waiting for an customer...\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Getting closest customer..")
+             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Waiting for an customer...")
                     end
         local ClosestCustomer = CashierClass:GetClosestValidCustomer()
         if ClosestCustomer then
@@ -227,9 +227,9 @@ local CashierCoroutine = coroutine.create(function()
             local TargetRegister = CashierClass:GetRegisterFromCustomer(ClosestCustomer)
             if TargetRegister then
                           if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Yielding for walking to finish\n")
+                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Walking to customer\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Yielding for walking to finish")
+             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Walking to customer")
                     end
                 WalkToPoint(TargetRegister.Border.Position + (-TargetRegister.Border.CFrame.LookVector).Unit * 5)()
                 LocalPlayer.Character:PivotTo(CFrame.new(LocalPlayer.Character.HumanoidRootPart.Position, ClosestCustomer.HumanoidRootPart.Position))
@@ -237,9 +237,9 @@ local CashierCoroutine = coroutine.create(function()
                     continue
                 end
                      if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done yielding.\n")
+                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done Walking.\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done yielding.")
+             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done Walking.")
                     end
                 CashierClass:HandleCustomerDialog(ClosestCustomer, TargetRegister)
                                        if streamproof then
@@ -265,9 +265,15 @@ end
 coroutine.resume(CashierCoroutine)
 MainClass:Init(true)
 else
-       if streamproof then
+    if streamproof then
     rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Error: Wrong game\n")
       else
      print(timeInfo.hour .. ":" .. timeInfo.min.. " | Error: Wrong game")
      end
+end
+
+if fastmode then
+   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 22
+else
+   game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
 end
