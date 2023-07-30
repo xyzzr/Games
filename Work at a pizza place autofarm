@@ -5,21 +5,20 @@ local fastmode = true
 local lowgfx = true
 local antiafk = true
 
-
+-- End of configs
 local EventHandler
 local timeInfo = os.date("*t")
 local version = "1.2"
-
 if game.PlaceId == 192800 then
 
 if streamproof then
-  rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version)
-  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Script loaded.")
+  rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version .. "\n")
+  rconsoleprint("Log: Script loaded.")
 end
 for i,v in pairs(getgc()) do
     if typeof(v) == "function" and islclosure(v) and not is_synapse_function(v) and debug.getinfo(v).name == "GetEventHandler" then
               if streamproof then
-              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found\n")
+              rconsoleprint("Log: Customer Found\n")
              else
             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found")
         end
@@ -35,7 +34,7 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
    end)
    if streamproof then
-     rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-afk is on\n")
+     rconsoleprint("Log: Anti-afk is on\n")
    else
      print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-Afk is on")
     end
@@ -178,9 +177,9 @@ function CashierClass:HandleCustomerDialog(Customer, Register)
         Events.OrderComplete:FireServer(Customer, OrderString, Register)
         Customer:SetAttribute("AlreadyHandled", true)
                           if streamproof then
-              rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done talking to customer.\n")
+              rconsoleprint("Log: Done talking to customer.\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done talking to customer.")
+             print("Log: Done talking to customer.")
             end
     end
 end
@@ -205,31 +204,31 @@ end
 local CashierCoroutine = coroutine.create(function()
     while wait(1) do
             if streamproof then
-             rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Loop started\n")
+             rconsoleprint("Log: Loop started\n")
               else
-           print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Loop started")
+           print("Log: Loop started")
               end
         if LocalPlayer.Team ~= game:GetService("Teams").Cashier then
             TeleportToJob("Cashier")
         end
                          if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Waiting for an customer...\n")
+                  rconsoleprint("Log: Waiting for an customer...\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Waiting for an customer...")
+             print("Log: Waiting for an customer...")
                     end
         local ClosestCustomer = CashierClass:GetClosestValidCustomer()
         if ClosestCustomer then
                 if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Getting register\n")
+                  rconsoleprint("Log: Getting register\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Getting register")
+             print("Log: Getting register")
              end
             local TargetRegister = CashierClass:GetRegisterFromCustomer(ClosestCustomer)
             if TargetRegister then
                           if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Walking to customer\n")
+                  rconsoleprint("Log: Walking to customer\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Walking to customer")
+             print("Log: Walking to customer")
                     end
                 WalkToPoint(TargetRegister.Border.Position + (-TargetRegister.Border.CFrame.LookVector).Unit * 5)()
                 LocalPlayer.Character:PivotTo(CFrame.new(LocalPlayer.Character.HumanoidRootPart.Position, ClosestCustomer.HumanoidRootPart.Position))
@@ -237,15 +236,15 @@ local CashierCoroutine = coroutine.create(function()
                     continue
                 end
                      if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done Walking.\n")
+                  rconsoleprint("Log: Done Walking.\n")
                  else
-             print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done Walking.")
+             print("Log: Done Walking.")
                     end
                 CashierClass:HandleCustomerDialog(ClosestCustomer, TargetRegister)
                                        if streamproof then
-                  rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done order!\n")
+                  rconsoleprint("Log: Done order!\n")
                  else
-                     print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Done order!")
+                     print("Log: Done order!")
                   end
             end
         end
@@ -253,22 +252,51 @@ local CashierCoroutine = coroutine.create(function()
 end)
 
 if lowgfx then
-for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-    if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
-        v.Material = Enum.Material.SmoothPlastic
-        if v:IsA("Texture") then
-            v:Destroy()
-               end
-         end
+local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
     end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+       end
+   end
 end
 coroutine.resume(CashierCoroutine)
 MainClass:Init(true)
 else
     if streamproof then
-    rconsoleprint(timeInfo.hour .. ":" .. timeInfo.min.. " | Error: Wrong game\n")
+    rconsoleprint("Error: Wrong Game\n")
       else
-     print(timeInfo.hour .. ":" .. timeInfo.min.. " | Error: Wrong game")
+     print("Error: Wrong Game")
      end
 end
 
@@ -276,4 +304,16 @@ if fastmode then
    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 22
 else
    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end
+
+while wait(30) do
+local notes = {"Scripter Note: Over time the walk to target might bug abit but it should not interween on the order.","This script is undetectable.","I fogor","Best free working autofarm for work at a pizza place.","More functions soon","Made by jailedd and pvhh"}
+local notepicker = notes[math.random(1,#notes)]
+delay(0,function()
+         if streamproof then
+    rconsoleprint(notepicker .."\n")
+      else
+    print("Error Report: Over time the walk to target might bug abit but it should not interween on the order.")
+        end
+    end)
 end
