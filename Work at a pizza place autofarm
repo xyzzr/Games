@@ -12,17 +12,41 @@ local version = "1.2"
 if game.PlaceId == 192800 then
 
 if streamproof then
-  rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version .. "\n")
-  rconsoleprint("Log: Script loaded.")
-end
-for i,v in pairs(getgc()) do
-    if typeof(v) == "function" and islclosure(v) and not is_synapse_function(v) and debug.getinfo(v).name == "GetEventHandler" then
-              if streamproof then
-              rconsoleprint("Log: Customer Found\n")
-             else
-            print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found")
-        end
-    EventHandler = v
+  rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version)
+  rconsoleprint("<------------------------------------>\n")
+  rconsoleprint("Log: Script is loading..\n")
+  if antiafk then
+    rconsoleprint("Log: Anti-afk is: on\n")
+     else
+    rconsoleprint("Log: Anti-afk is: disabled\n")
+  end
+  if lowgfx then
+    rconsoleprint("Log: Low-gfx is: on\n")
+     else
+    rconsoleprint("Log: Low-gfx is: disabled\n")
+  end
+  if fastmode then
+    rconsoleprint("Log: Fast Mode is: on\n")
+     else
+    rconsoleprint("Log: Fast Mode is: disabled\n")
+  end
+  else
+    rconsoleprint("<------------------------------------>\n")
+  rconsoleprint("Log: Script is loading..\n")
+  if antiafk then
+    rconsoleprint("Log: Anti-afk is: on\n")
+     else
+    rconsoleprint("Log: Anti-afk is: disabled\n")
+  end
+  if lowgfx then
+    rconsoleprint("Log: Low-gfx is: on\n")
+     else
+    rconsoleprint("Log: Low-gfx is: disabled\n")
+  end
+  if fastmode then
+    rconsoleprint("Log: Fast Mode is: on\n")
+     else
+    rconsoleprint("Log: Fast Mode is: disabled\n")
   end
 end
 
@@ -39,6 +63,26 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
      print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-Afk is on")
     end
 end
+wait(5.5)
+if streamproof then
+ rconsoleprint("Auto-Farm loaded.\n")
+  rconsoleprint("<------------------------------------>\n")
+else
+  print("Auto-Farm loaded.\n")
+ print("<------------------------------------>\n")
+end
+wait(0.5)
+for i,v in pairs(getgc()) do
+    if typeof(v) == "function" and islclosure(v) and not is_synapse_function(v) and debug.getinfo(v).name == "GetEventHandler" then
+              if streamproof then
+              rconsoleprint("Log: Customer Found\n")
+             else
+            print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Customer Found")
+        end
+    EventHandler = v
+  end
+end
+
 local Table2 = getupvalue(EventHandler, 1)
 for i,v in pairs(Table2) do
     if v.Remote then
