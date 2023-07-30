@@ -14,7 +14,7 @@ if game.PlaceId == 192800 then
 if streamproof then
   rconsolename("Auto-Cashier | Work at a pizza place | Version: " .. version)
   rconsoleprint("<------------------------------------>\n")
-  rconsoleprint("Log: Script is loading..\n")
+  rconsoleprint("Log: Auto-Farm is loading..\n")
   if antiafk then
     rconsoleprint("Log: Anti-afk is: on\n")
      else
