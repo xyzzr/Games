@@ -1,5 +1,5 @@
 -- Output
-local streamproof = true -- steamproof = rconsole , print = normal console (F9)
+local streamproof = false -- steamproof = rconsole , print = normal console (F9)
 -- Farming
 local fastmode = true
 local lowgfx = true
@@ -29,24 +29,24 @@ if streamproof then
     rconsoleprint("Log: Fast Mode is: on\n")
      else
     rconsoleprint("Log: Fast Mode is: disabled\n")
-  end
-  else
-    rconsoleprint("<------------------------------------>\n")
-  rconsoleprint("Log: Script is loading..\n")
+    end
+else -- streamproof off
+    print("<------------------------------------>")
+  print("Log: Script is loading..")
   if antiafk then
-    rconsoleprint("Log: Anti-afk is: on\n")
+    print("Log: Anti-afk is: on")
      else
-    rconsoleprint("Log: Anti-afk is: disabled\n")
+    print("Log: Anti-afk is: disabled")
   end
   if lowgfx then
-    rconsoleprint("Log: Low-gfx is: on\n")
+    print("Log: Low-gfx is: on")
      else
-    rconsoleprint("Log: Low-gfx is: disabled\n")
+    print("Log: Low-gfx is: disabled")
   end
   if fastmode then
-    rconsoleprint("Log: Fast Mode is: on\n")
+    print("Log: Fast Mode is: on")
      else
-    rconsoleprint("Log: Fast Mode is: disabled\n")
+    print("Log: Fast Mode is: disabled")
   end
 end
 
@@ -57,19 +57,14 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
    end)
-   if streamproof then
-     rconsoleprint("Log: Anti-afk is on\n")
-   else
-     print(timeInfo.hour .. ":" .. timeInfo.min.. " | Log: Anti-Afk is on")
-    end
 end
 wait(5.5)
 if streamproof then
- rconsoleprint("Auto-Farm loaded.\n")
+ rconsoleprint("Log: Auto-Farm loaded.\n")
   rconsoleprint("<------------------------------------>\n")
 else
-  print("Auto-Farm loaded.\n")
- print("<------------------------------------>\n")
+  print("Log: Auto-Farm loaded.")
+ print("<------------------------------------>")
 end
 wait(0.5)
 for i,v in pairs(getgc()) do
@@ -248,9 +243,9 @@ end
 local CashierCoroutine = coroutine.create(function()
     while wait(1) do
             if streamproof then
-             rconsoleprint("Log: Loop started\n")
+             rconsoleprint("Log: Waiting Loop started\n")
               else
-           print("Log: Loop started")
+           print("Log: Waiting Loop started")
               end
         if LocalPlayer.Team ~= game:GetService("Teams").Cashier then
             TeleportToJob("Cashier")
