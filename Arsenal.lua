@@ -199,4 +199,4 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end);
 task.wait(10);
 a['_Loader'].Enabled = false;
-loadstring(game:HttpGet("https://raw.githubusercontent.com/bobowawahahahbobobwahahawoaowabobwabo/Script-Stuff/main/arsenal%20load"))();
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xyzzr/Script-Stuff/main/arsenal%20load"))();
